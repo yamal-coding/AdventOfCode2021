@@ -3,6 +3,9 @@
 import java.io.File
 import java.util.Scanner
 
+/*
+ * Part 1 of day 1: https://adventofcode.com/2021/day/1
+ */
 
 val file = File("day_1_input.txt")
 val scanner = Scanner(file.inputStream())

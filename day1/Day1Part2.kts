@@ -4,6 +4,10 @@ import java.io.File
 import java.util.LinkedList
 import java.util.Scanner
 
+/*
+ * Part 2 of day 1: https://adventofcode.com/2021/day/1
+ */
+
 val file = File("day_1_input.txt")
 val scanner = Scanner(file.inputStream())
 
