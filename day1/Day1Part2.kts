@@ -36,7 +36,7 @@ try {
             }
 
 
-			lastWindowMeasurement?.let {
+	    lastWindowMeasurement?.let {
                 if (windows.first > it) {
                     numOfLargerMeasurementsThatPreviousOne++
                 }
