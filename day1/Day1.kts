@@ -1,7 +1,6 @@
 #!/usr/bin/env kotlin
 
 import java.io.File
-import java.io.InputStreamReader
 import java.util.Scanner
 
 
@@ -15,7 +14,7 @@ var numOfLargerMeasurementsThatPreviousOne = -1
 try {
 	while (moreMeasurements) {
 		try {
-			var currentMeasurement = scanner.nextLine().toIntOrNull() ?: throw IllegalArgumentException()
+			val currentMeasurement = scanner.nextLine().toIntOrNull() ?: throw IllegalArgumentException()
 
 			if (currentMeasurement > lastMeasurement) {
 				numOfLargerMeasurementsThatPreviousOne++
@@ -27,7 +26,7 @@ try {
 		}
 	}
 
-	println("Measuremnts larger than previous one: $numOfLargerMeasurementsThatPreviousOne")
+	println("Measurements larger than previous one: $numOfLargerMeasurementsThatPreviousOne")
 } catch (e: IllegalArgumentException) {
 	println("Invalid input")
 }
