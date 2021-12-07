@@ -2,8 +2,6 @@
 
 import java.io.File
 import java.util.Scanner
-import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.pow
 
 /*
