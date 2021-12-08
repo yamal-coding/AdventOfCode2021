@@ -4,7 +4,7 @@ import java.io.File
 import java.util.Scanner
 
 /*
- * Part 1 of day 4: https://adventofcode.com/2021/day/4
+ * Part 2 of day 4: https://adventofcode.com/2021/day/4
  */
 
 val file = File("day_4_input.txt")
@@ -14,8 +14,8 @@ val randomNumbers = scanner.nextLine().split(",")
 val rowsCounters = arrayOf(0, 0, 0, 0, 0, 0)
 val columnsCounters = arrayOf(0, 0, 0, 0, 0, 0)
 
-var minStepsToWin = Int.MAX_VALUE
-var firstWinningBoardScore = 0
+var maxStepsToWin = Int.MIN_VALUE
+var lastWinningBoardScore = 0
 var numberToWin = 0
 
 while (scanner.hasNext()) {
@@ -23,7 +23,7 @@ while (scanner.hasNext()) {
 	resetCounters()
 }
 
-println("Board with score $firstWinningBoardScore in $minStepsToWin steps at number $numberToWin. Score * winning number: ${firstWinningBoardScore * numberToWin}")
+println("Board with score $lastWinningBoardScore in $maxStepsToWin steps at number $numberToWin. Score * winning number: ${lastWinningBoardScore * numberToWin}")
 
 fun resetCounters() {
 	for (i in 0..4) {
@@ -37,6 +37,7 @@ fun analyzeNextBoard() {
 	val cellCoordinates = mutableMapOf<String, Pair<Int, Int>>()
 	val unmarkedCells = mutableSetOf<String>()
 	var hasWon = false
+	var candidateNumberToWin = 0
 
 	for (row in 0..4) {
 		for (column in 0..4) {
@@ -46,7 +47,7 @@ fun analyzeNextBoard() {
 		}
 	}
 
-	while (steps < minStepsToWin && !hasWon) {
+	while (steps < randomNumbers.size && !hasWon) {
 		val randomNumber = randomNumbers[steps - 1]
 
 		val coordinates = cellCoordinates[randomNumber]
@@ -58,15 +59,16 @@ fun analyzeNextBoard() {
 
 			if (rowsCounters[row] == 5 || columnsCounters[column] == 5) {
 				hasWon = true
-				numberToWin = randomNumber.toInt()
-				minStepsToWin = steps
+				candidateNumberToWin = randomNumber.toInt()
 			}
 		}
 
 		steps++
 	}
 
-	if (hasWon) {
-		firstWinningBoardScore = unmarkedCells.sumOf { it.toInt() }
+	if (hasWon && steps > maxStepsToWin) {
+		numberToWin = candidateNumberToWin
+		maxStepsToWin = steps
+		lastWinningBoardScore = unmarkedCells.sumOf { it.toInt() }
 	}
 }
