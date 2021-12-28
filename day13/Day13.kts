@@ -4,7 +4,8 @@ import java.io.File
 import java.util.Scanner
 
 /*
- * Part 1 of day 13: https://adventofcode.com/2021/day/13
+ * Dday 13: https://adventofcode.com/2021/day/13
+ * Code for day 13 is the same for part 1 and part 2.
  */
 
 val file = File("day_13_input.txt")
@@ -43,21 +44,35 @@ while (!firstFoldInstructionRead) {
 var width = maxX++
 var height = maxY++
 
-scanner.next() // read "along" keyword
+var keepFolding = true
 
-val foldInfo = scanner.next().split("=")
-val foldOrientation = foldInfo[0]
-val foldPosition = foldInfo[1].toInt()
+do {
+	scanner.next() // read "along" token
 
-if (foldOrientation == "x") {
-	foldHorizontally()
-} else {
-	foldVertically()
-}
+	val foldInfo = scanner.next().split("=")
+	val foldOrientation = foldInfo[0]
+	val foldPosition = foldInfo[1].toInt()
 
-println("num of dots after first fold: ${dotCoordinates.size}")
+	if (foldOrientation == "x") {
+		foldHorizontally(foldPosition)
+	} else {
+		foldVertically(foldPosition)
+	}
 
-fun foldHorizontally() {
+	println("Number of dots after step is ${dotCoordinates.size}")
+
+	if (scanner.hasNext()) {
+		scanner.next() // read "fold" token
+	} else {
+		keepFolding = false
+	}
+} while (keepFolding)
+
+// The content of the sheet (the shapes drawn by the dots) tells you the solution
+// 8 capital letters
+printSheet()
+
+fun foldHorizontally(foldPosition: Int) {
 	if (foldPosition < width / 2) {
 		val dotsToBeFolded = dotCoordinates
 			.asSequence()
@@ -70,6 +85,7 @@ fun foldHorizontally() {
 			dotCoordinates.remove(dot)
 			dotCoordinates.add(dot.copy(x = foldPosition + offset))
 		}
+		width -= foldPosition
 	} else {
 		val dotsToBeFolded = dotCoordinates
 			.asSequence()
@@ -82,10 +98,18 @@ fun foldHorizontally() {
 			dotCoordinates.remove(dot)
 			dotCoordinates.add(dot.copy(x = foldPosition - offset))
 		}
+		width = foldPosition
+	}
+	val dotsInFold = dotCoordinates
+			.asSequence()
+			.filter { it.x == foldPosition }
+			.toList()
+	dotsInFold.forEach { dot ->
+		dotCoordinates.remove(dot)
 	}
 }
 
-fun foldVertically() {
+fun foldVertically(foldPosition: Int) {
 	if (foldPosition < height / 2) {
 		val dotsToBeFolded = dotCoordinates
 			.asSequence()
@@ -98,6 +122,7 @@ fun foldVertically() {
 			dotCoordinates.remove(dot)
 			dotCoordinates.add(dot.copy(y = foldPosition + offset))
 		}
+		height -= foldPosition
 	} else {
 		val dotsToBeFolded = dotCoordinates
 			.asSequence()
@@ -110,5 +135,27 @@ fun foldVertically() {
 			dotCoordinates.remove(dot)
 			dotCoordinates.add(dot.copy(y = foldPosition - offset))
 		}
+		height = foldPosition
+	}
+
+	val dotsInFold = dotCoordinates
+			.asSequence()
+			.filter { it.y == foldPosition }
+			.toList()
+	dotsInFold.forEach { dot ->
+		dotCoordinates.remove(dot)
+	}
+}
+
+fun printSheet() {
+	for (y in 0 until height) {
+		for (x in 0 until width) {
+			if (dotCoordinates.contains(Dot(x, y))) {
+				print("#")
+			} else {
+				print(".")
+			}
+		}
+		println()
 	}
 }
