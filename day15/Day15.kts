@@ -100,7 +100,7 @@ fun insertOpenPath(coordinates: Coordinates) {
 }
 
 fun calculateLowestRisk(): Int {
-	var risk = 0
+	var risk = cavernMap[EXIT_Y][EXIT_X]
 
 	var previousPoint = cameFrom[Coordinates(x = EXIT_X, y = EXIT_Y)]
 	while (previousPoint != null && previousPoint != START_COORDINATES) {
