@@ -27,12 +27,10 @@ fun parsePackage() {
 	val typeId = listOf(input[i++], input[i++], input[i++]).toDecimal()
 
 	if (typeId == 4) {
-		var packageLength = 6
 		do {
 			val nextBit = input[i++]
 			// skip next 4 bits
 			i += 4
-			packageLength += 5
 		} while (nextBit == 1)
 	} else {
 		var lengthTypeId = input[i++]
