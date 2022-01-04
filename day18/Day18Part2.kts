@@ -2,7 +2,6 @@
 
 import java.io.File
 import java.util.Scanner
-import kotlin.math.max
 
 /*
  * Part 2 of day 18: https://adventofcode.com/2021/day/18
