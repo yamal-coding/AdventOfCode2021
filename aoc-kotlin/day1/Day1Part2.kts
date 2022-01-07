@@ -19,43 +19,33 @@ for (i in 1..WINDOW_SIZE) {
 }
 
 var windowIteration = 1
-var moreMeasurements = true
 var numOfLargerMeasurementsThatPreviousOne = 0
 var lastWindowMeasurement: Int? = null
 
-try {
-    while (moreMeasurements) {
-        try {
-            val currentMeasurement = scanner.nextLine().toIntOrNull() ?: throw IllegalArgumentException()
+while (scanner.hasNext()) {
+    val currentMeasurement = scanner.nextLine().toIntOrNull() ?: throw IllegalArgumentException("Invalid input")
 
-            val iterator = windows.listIterator()
-            var i = 0
-            while (i < windowIteration && iterator.hasNext()) {
-                iterator.set(iterator.next() + currentMeasurement)
-                i++
-            }
-
-
-	    lastWindowMeasurement?.let {
-                if (windows.first > it) {
-                    numOfLargerMeasurementsThatPreviousOne++
-                }
-                lastWindowMeasurement = null
-            }
-
-            if (windowIteration == WINDOW_SIZE) {
-            	lastWindowMeasurement = windows.first
-                windows.removeFirst()
-                windows.add(0)
-            } else {
-                windowIteration++
-            }
-        } catch (e: NoSuchElementException) {
-            moreMeasurements = false
-        }
+    val iterator = windows.listIterator()
+    var i = 0
+    while (i < windowIteration && iterator.hasNext()) {
+        iterator.set(iterator.next() + currentMeasurement)
+        i++
     }
 
-    println("Measurements larger than previous one: $numOfLargerMeasurementsThatPreviousOne")
-} catch (e: IllegalArgumentException) {
-    println("Invalid input")
+    lastWindowMeasurement?.let {
+        if (windows.first > it) {
+            numOfLargerMeasurementsThatPreviousOne++
+        }
+        lastWindowMeasurement = null
+    }
+
+    if (windowIteration == WINDOW_SIZE) {
+        lastWindowMeasurement = windows.first
+        windows.removeFirst()
+        windows.add(0)
+    } else {
+        windowIteration++
+    }
 }
+
+println("Measurements larger than previous one: $numOfLargerMeasurementsThatPreviousOne")
