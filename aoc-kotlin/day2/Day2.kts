@@ -10,22 +10,17 @@ import java.util.Scanner
 val file = File("day_2_input.txt")
 val scanner = Scanner(file.inputStream())
 
-var moreMeasurements = true
 var x = 0
 var y = 0
 
-while (moreMeasurements) {
-	try {
-		val direction = scanner.next()
-		val move = scanner.nextInt()
+while (scanner.hasNext()) {
+	val direction = scanner.next()
+	val move = scanner.nextInt()
 
-		when (direction) {
-			"forward" -> x += move
-			"up" -> y -= move
-			"down" -> y += move
-		}
-	} catch (e: NoSuchElementException) {
-		moreMeasurements = false
+	when (direction) {
+		"forward" -> x += move
+		"up" -> y -= move
+		"down" -> y += move
 	}
 }
 
