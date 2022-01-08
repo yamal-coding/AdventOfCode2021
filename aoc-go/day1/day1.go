@@ -21,7 +21,7 @@ func main() {
 		check(parseError)
 
 		if newMeasurement > lastMeasurement {
-			measurementsLargerThanPreviousOne = measurementsLargerThanPreviousOne + 1
+			measurementsLargerThanPreviousOne++
 		}
 		lastMeasurement = newMeasurement
 	}

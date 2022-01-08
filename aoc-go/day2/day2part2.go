@@ -17,6 +17,8 @@ func main() {
 
 	x := 0
 	y := 0
+	aim := 0
+
 	for scanner.Scan() {
 		direction := scanner.Text()
 		if !scanner.Scan() {
@@ -31,10 +33,11 @@ func main() {
 		switch direction {
 		case "forward":
 			x += increase
+			y += aim * increase
 		case "down":
-			y += increase
+			aim += increase
 		case "up":
-			y -= increase
+			aim -= increase
 		default:
 			panic("Invalid direction value")
 		}
